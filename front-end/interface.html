@@ -1,0 +1,758 @@
+<!-- Link: landing page https://www.youtube.com/watch?v=edDCEK5QWE8 -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="./styles/main.css" />
+    <link rel="stylesheet" type="text/css" href="./styles/fonts.css" />
+    <link rel="stylesheet" type="text/css" href="./styles/media.css" />
+    <script type="text/javascript" src="/eel.js"></script>
+    <script src="sweetalert2/dist/sweetalert2.min.js"></script>
+    <link rel="stylesheet" href="sweetalert2/dist/sweetalert2.min.css" />
+
+    <title>BJ Software</title>
+  </head>
+  <header>
+    <div id="title">
+      <h1>Bolted Joint Software</h1>
+    </div>
+    <div class="btn-geral">
+      <button
+        class="askquestion"
+        onclick="setDisplayMensagens('dev-aux', true)"
+      >
+        ?
+      </button>
+      &nbsp;
+      <button class="btn-header" onclick="setDisplayMensagens('inicio', true)">
+        Início
+      </button>
+      &nbsp;
+      <button class="btn-header" onclick="setDisplayMensagens('close', true)">
+        Sair
+      </button>
+    </div>
+  </header>
+  <body onload="init()">
+    <ul>
+      <a class="item one active"
+        ><li>Início</li>
+        <span class="tooltiptext">Início</span></a
+      >
+      <a class="item two"
+        ><li>Comp...</li>
+        <span class="tooltiptext">Comprimento do Parafuso</span></a
+      >
+      <a class="item three"
+        ><li>Rigi..</li>
+        <span class="tooltiptext">Rigidez do Parafuso</span></a
+      >
+      <a class="item four"
+        ><li>Mem..</li>
+        <span class="tooltiptext">Membros da Junta</span></a
+      >
+      <a class="item five"
+        ><li>Rigi..</li>
+        <span class="tooltiptext">Rigidez dos Membros</span></a
+      >
+      <a class="item six"
+        ><li>Inputs</li>
+        <span class="tooltiptext">Inputs</span></a
+      >
+      <a class="item seven"
+        ><li>Crité..</li>
+        <span class="tooltiptext">Critérios de Projeto</span></a
+      >
+      <a class="item eight"
+        ><li>Export</li>
+        <span class="tooltiptext">Exportar</span></a
+      >
+    </ul>
+    <main>
+      <section class="content first">
+        <aside>
+          <h3>Informações sobre o Parafuso</h3>
+          <section>
+            <div class="row">
+              <div class="col">
+                <p>Parafuso</p>
+                <select
+                  id="selecioneParafuso"
+                  onchange="onChangeSelect('selecioneParafuso')"
+                ></select>
+              </div>
+              <div class="col">
+                <span class="spamLeft_principal"></span>
+              </div>
+              <div class="col">
+                <p>Passo (p)</p>
+                <select id="selecionePasso"></select>
+              </div>
+              <div class="col">
+                <span class="spamLeft_secundario">mm</span>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col">
+                <p>Rigidez (Aço-Carbono)</p>
+                <input
+                  class="no-number"
+                  type="number"
+                  id="elasticidadeDoParafuso"
+                />
+              </div>
+              <div class="col">
+                <span class="spamLeft_principal">MPa</span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <p>Altura da Porca (H)</p>
+                <input
+                  class="no-number"
+                  type="number"
+                  id="alturaPorca"
+                  value=""
+                />
+              </div>
+              <div class="col">
+                <span class="spamLeft_principal">mm</span>
+              </div>
+              <div class="col">
+                <p>Quantidade de Porcas</p>
+                <input
+                  class="number"
+                  type="number"
+                  min="1"
+                  id="quantidadePorca"
+                  value="1"
+                  max="6"
+                />
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col">
+                <p>Altura Arruela</p>
+                <input
+                  class="no-number"
+                  type="number"
+                  id="alturaArruela"
+                  placeholder="2"
+                  value="2"
+                />
+              </div>
+              <div class="col">
+                <span class="spamLeft_principal">mm</span>
+              </div>
+              <div class="col">
+                <p>Quantidade de Arruelas</p>
+                <input
+                  class="number"
+                  type="number"
+                  min="0"
+                  id="quantidadeArruela"
+                  value="2"
+                  step="2"
+                  max="6"
+                />
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <p>Espessura total das chapas</p>
+                <div class="arrumar-valor">
+                  <input
+                    class="no-number"
+                    type="number"
+                    id="alturaTotalChapas"
+                    placeholder="456.7"
+                  />
+                  <span class="spanEspessura">mm</span>
+                </div>
+              </div>
+            </div>
+          </section>
+        </aside>
+        <article>
+          <img
+            src="./components/images/preenchimento.png"
+            alt="exemplo-preenchimento"
+          />
+          <br>
+          <span>Exemplo de Junta Parafusada</span>
+        </article>
+      </section>
+
+      <section class="content hidden">
+        <h4>Comprimento do Parafuso</h4>
+        <div class="row">
+          <div class="col">
+            <p>Área de tração do Parafuso</p>
+            <input
+              class="no-number"
+              type="number"
+              id="a_t"
+              value="5.2"
+              readonly
+            />
+          </div>
+          <div class="col">
+            <span class="spamLeft_principal">mm<sup>2</sup></span>
+          </div>
+          <div class="col">
+            <p>Área nominal do Parafuso</p>
+            <input
+              class="no-number"
+              type="number"
+              id="a_d"
+              value="5.2"
+              readonly
+            />
+          </div>
+          <div class="col">
+            <span class="spamLeft_principal">mm<sup>2</sup></span>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <p>Comprimento do Parafuso</p>
+            <input
+              class="no-number"
+              type="text"
+              id="comprimentoParafuso"
+              readonly
+            />
+          </div>
+          <div class="col">
+            <span class="spamLeft_principal">mm</span>
+          </div>
+          <div class="col">
+            <p><span>Comprimento Padronizado</span></p>
+            <input
+              id="comprimentoPadronizado"
+              class="no-number"
+              type="number"
+              style="font-weight: bold"
+              readonly
+            />
+            <span class="spamLeft_quarto">mm</span>
+            <div class="row">
+              <input
+                type="checkbox"
+                name="alterL"
+                id="alterL"
+                onchange="changeReadOnly()"
+              />
+              <label for="alterL"> Alterar valor manualmente</label><br />
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col" id="newValor" style="visibility: hidden">
+            <p><span>Novo Valor Comprimento</span></p>
+            <input
+              class="no-number"
+              id="novoComprimento"
+              type="number"
+              style="font-weight: bold"
+            />
+            <span class="spamLeft_quarto">mm</span>
+          </div>
+        </div>
+      </section>
+      <section class="content hidden">
+        <h4>Rigidez do parafuso</h4>
+        <div class="row">
+          <div class="col">
+            <p>Total de rosca (L<sub>T</sub>)</p>
+            <input
+              class="no-number"
+              type="number"
+              id="l_t_cap"
+              value="5.2"
+              readonly
+            />
+          </div>
+          <div class="col">
+            <span class="spamLeft_principal">mm</span>
+          </div>
+          <div class="col">
+            <p>Comprimento do parafuso sem rosca (L<sub>d</sub>)</p>
+            <input
+              class="no-number"
+              type="number"
+              id="l_d"
+              value="5.2"
+              readonly
+            />
+          </div>
+          <div class="col">
+            <span class="spamLeft_principal">mm</span>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <p><span>Rigidez do parafuso(k<sub>p</sub>)</span></p>
+            <input
+              class="no-number"
+              type="number"
+              id="kp"
+              value="5.2"
+              style="font-weight: bold"
+              readonly
+            />
+          </div>
+          <div class="col">
+            <span class="spamLeft_principal number-extra"
+              >10<sup>6</sup>N/mm</span
+            >
+          </div>
+          <div class="col">
+            <p>Comprimento do parafuso com rosca (L<sub>t</sub>)</p>
+            <input
+              class="no-number"
+              type="number"
+              id="l_t"
+              value="5.2"
+              readonly
+            />
+          </div>
+          <div class="col">
+            <span class="spamLeft_principal">mm</span>
+          </div>
+        </div>
+      </section>
+      <section class="content first hidden">
+        <aside>
+          <div class="typo">
+            <h4>Membros da Junta</h4>
+            <div class="buttons table">
+              <input
+                type="button"
+                id="delete"
+                value="-"
+                onclick="delete_row()"
+              />
+              <input type="button" id="add" value="+" onclick="add_row()" />
+            </div>
+          </div>
+
+          <table>
+            <tbody class="rigidez-materiais-table">
+              <tr>
+                <th>N</th>
+                <th>Espessura (mm)</th>
+                <th>Material</th>
+                <th>Modulo E (10<sup>3 MPa)</th>
+              </tr>
+            </tbody>
+          </table>
+        </aside>
+        <div class="container-progress">
+          <p>Cone de Deformação</p>
+          <article id="myProgress">
+            <div id="myBar"></div>
+          </article>
+        </div>
+      </section>
+      <section class="content first hidden">
+        <aside>
+          <h4>Cones de Deformação</h4>
+          <table>
+            <tbody class="cone-deformacao-table">
+              <tr>
+                <th>Cone</th>
+                <th>D (mm)</th>
+                <th>t (mm)</th>
+                <th>Modulo E (10<sup>3</sup>N/mm<sup>2</sup>)</th>
+                <th>K (10<sup>6</sup>N/mm)</th>
+              </tr>
+            </tbody>
+          </table>
+        </aside>
+        <article>
+          <h4>Rigidez dos Materiais e Constante da Junta</h4>
+          <div class="row">
+            <div class="col">
+              <p><span>Rigidez dos Materiais(k<sub>m</sub>)</span></p>
+              <input class="no-number" type="number" id="km" readonly />
+            </div>
+            <div class="col">
+              <span class="spamLeft_quinto"> 10<sup>6</sup> N/mm</span>
+            </div>
+            <div class="col">
+              <p><span>Constante da Junta (C)</span></p>
+              <input class="no-number" type="number" id="c_p" readonly />
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <section class="content first hidden">
+        <aside>
+          <h3>Informações sobre a União</h3>
+          <div class="row">
+            <div class="col text-area">
+              <p>Determine qual é o objetivo do cálculo:</p>
+              <select
+                class="selectLarge moreLarge"
+                id="selecioneObjetivo"
+                onchange="onChangeSelect('selecioneObjetivo')"
+              >
+                <option value="-">-</option>
+                <option value="checar-cs-local">
+                  Verificar a margem de segurança (CS) com carga externa
+                </option>
+                <option value="checar-cs">
+                  Verificar a margem de segurança (CS) com carga externa
+                  flutuante
+                </option>
+                <option value="max-local">
+                  Encontrar a máxima carga externa suportada
+                </option>
+                <option value="max-local-flutuante">
+                  Encontrar a máxima carga externa e flutuante suportada
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <p>Tipo de carregamento sofrido pela união:</p>
+              <select
+                class="selectLarge moreLarge notImportant"
+                id="selecioneTipoCarregamento"
+                onchange="onChangeSelect('selecioneTipoCarregamento')"
+              >
+                <option value="forca">Força</option>
+                <option value="tensao">Tensão ou Pressão</option>
+              </select>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <p>Quantos parafusos sofrem a carga:</p>
+              <input
+                class="number"
+                type="number"
+                min="1"
+                id="qtdParafuso"
+                value="1"
+              />
+            </div>
+            <div class="col">
+              <p>Classe Métrica</p>
+              <select
+                id="selecioneClasseMetrica"
+                onchange="onChangeSelect('selecioneClasseMetrica')"
+              ></select>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <p>Limite de Escoamento</p>
+              <input
+                class="no-number"
+                type="number"
+                id="sesc"
+                placeholder="54"
+              />
+            </div>
+            <div class="col">
+              <span class="spamLeft_sexto">MPa</span>
+            </div>
+            <div class="col">
+              <p>Tensão de Ruptura</p>
+              <input
+                class="no-number"
+                type="number"
+                id="sruptura"
+                placeholder="40"
+              />
+            </div>
+            <div class="col">
+              <span class="spamLeft_sexto">MPa</span>
+            </div>
+          </div>
+        </aside>
+        <article>
+          <h3>Informações sobre as cargas</h3>
+          <div class="row">
+            <div class="col" id="pre-tensaoRow">
+              <p>Fração da Pré-Tensão</p>
+              <input
+                class="no-number"
+                type="number"
+                id="pre-tensao"
+                placeholder="90"
+                onchange="onChangeSelect('pre-tensao')"
+              />
+            </div>
+            <div class="col">
+              <span class="spamLeft_setimo">%</span>
+            </div>
+            <div class="col" id="forca-pre-cargaRow">
+              <p>Tensão de Prova</p>
+              <input
+                class="no-number"
+                type="number"
+                placeholder="0"
+                id="tensao-prova"
+              />
+            </div>
+            <div class="col">
+              <span class="spamLeft_setimo">KN</span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col" id="forcaMaxRow">
+              <p>Força Máxima</p>
+              <input
+                class="no-number"
+                type="number"
+                id="forcaMax"
+                placeholder="450"
+              />
+            </div>
+            <div class="col" id="forcaMaxSpamRow">
+              <span class="spamLeft_setimo">KN</span>
+            </div>
+            <div class="col" id="forcaMinRow">
+              <p>Força Mínima</p>
+              <input
+                class="no-number"
+                type="number"
+                placeholder="0"
+                id="forcaMin"
+              />
+            </div>
+            <div class="col" id="forcaMinSpamRow">
+              <span class="spamLeft_setimo">KN</span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col" id="cs-juntaRow">
+              <p>CS da Junta</p>
+              <input
+                class="no-number"
+                type="number"
+                id="cs-junta"
+                placeholder="1.75"
+              />
+            </div>
+            <div class="col">
+              <span class="spamLeft_quinto"></span>
+            </div>
+            <div class="col" id="cs-fadigaRow">
+              <p>CS de Fadiga</p>
+              <input
+                class="no-number"
+                type="number"
+                id="cs-fadiga"
+                placeholder="1.75"
+              />
+            </div>
+          </div>
+          <div class="row" style="visibility: hidden" id="areaTensaoRow">
+            <div class="col">
+              <p>Área de aplicação da Tensão/ Pressão</p>
+              <input
+                class="no-number"
+                type="number"
+                id="areaTensao"
+                placeholder="90"
+              />
+            </div>
+          </div>
+        </article>
+      </section>
+      <section class="content second hidden">
+        <aside>
+          <h3>Critérios de Projeto</h3>
+          <div class="row">
+            <div class="col">
+              <span>Força de Pré-Carga</span>
+              <input type="text" id="forca-pre-carga" value="" readonly />
+              <span class="spamLeft_quarto">N</span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col text-area">
+              <span>1. Não há perda de compressão das chapas</span>
+              <input type="text" id="criterio-um"  readonly />
+            </div>
+          </div>
+          <div class="row">
+            <div class="col text-area">
+              <span>2. Falha no primeiro ciclo de carga</span>
+              <input type="text" id="criterio-dois" readonly />
+            </div>
+          </div>
+          <div class="row">
+            <div class="col text-area">
+              <span>Resultado:</span>
+              <input
+                type="text"
+                id="resultado_criterio"
+                readonly
+              />
+            </div>
+          </div>
+        </aside>
+        <aside id="table-criterios">
+          <span>3. Falha por fadiga</span>
+          <table>
+            <tbody class="criterios-projeto-table">
+              <tr>
+                <th>Critérios de Falha</th>
+                <th id="typeTableCriterio"></th>
+                <!-- <th id="typeTableCriterio">F<sub>max</sub> (N)</th> -->
+                <th><p>&sigma;<sub>m</sub> (N/mm<sup>2</sup>)</p></th>
+                <th><p>&sigma;<sub>A</sub>(N/mm<sup>2</sup>)</p></th>
+              </tr>
+            </tbody>
+          </table>
+        </aside>
+      </section>
+      <section class="content first hidden">
+        <aside>
+          <h3>Informações para Export</h3>
+          <div class="row">
+            <div class="col">
+              <p>Nome</p>
+              <input type="text" id="NameAluno" placeholder="Nome do Usuário" />
+            </div>
+            <div class="col">
+              <p>Nome do Arquivo</p>
+              <input type="text" id="fileName" placeholder="relatorio-30-12" />
+            </div>
+          </div>
+          <div class="row">
+            <div class="col text-area">
+              <p>Título do Arquivo</p>
+              <input
+                type="text"
+                id="tituloFile"
+                placeholder="Avaliação de Juntas Parafusadas"
+              />
+            </div>
+          </div>
+          <div class="row">
+            <div class="col text-area">
+              <p>Descrição:</p>
+              <textarea
+                id="descricao"
+                cols="30"
+                rows="15"
+                style="resize: none"
+                placeholder="Modelo realizado no dia 30/12..."
+              ></textarea>
+            </div>
+          </div>
+        </aside>
+      </section>
+      <section class="buttons">
+        <input id="back" type="button" value="Voltar" disabled />
+        <input
+          id="next"
+          type="button"
+          value="Calcular Comprimento do Parafuso"
+          onclick="controllerSystem()"
+        />
+      </section>
+      <div id="block-screen" style="display: none"></div>
+      <div class="popup_box pergunta" id="close" style="display: none">
+        <h1>Encerrar!</h1>
+        <label>Você realmente deseja encerrar a ferramenta?</label>
+        <div class="btns">
+          <a class="btn1" onclick="setDisplayMensagens('close', false)">NÃO</a>
+          <a class="btn2" onclick="closeWindow()">SIM</a>
+        </div>
+      </div>
+      <div class="popup_box pergunta" id="inicio" style="display: none">
+        <h1>Voltar!</h1>
+        <label>Você realmente deseja reiniciar o processo?</label>
+        <div class="btns">
+          <a class="btn1" onclick="setDisplayMensagens('inicio', false)">NÃO</a>
+          <a class="btn2" onclick="reiniciarProcesso('inicio')">SIM</a>
+        </div>
+      </div>
+      <div class="popup_box pergunta" id="export" style="display: none">
+        <h1>Exportar Relatório</h1>
+        <label>Você realmente deseja baixar o relatório?</label>
+        <div class="btns">
+          <a class="btn1" onclick="setDisplayMensagens('export', false)">NÃO</a>
+          <a class="btn2" onclick="exportRelatorio()">SIM</a>
+        </div>
+      </div>
+      <div class="popup_box sucesso" id="export-ok" style="display: none">
+        <span>Sucesso!</span>
+        <label>Exportado com sucesso!</label>
+        <div class="btns">
+          <a class="btn1" onclick="reiniciarProcesso('export-ok')">Fechar</a>
+        </div>
+      </div>
+      <div class="popup_box pergunta" id="dev-aux" style="display: none">
+        <span>Dúvidas?</span>
+        <label>Entre em contato pelo e-mail</label>
+        <label>sduarteportela@gmail.com</label>
+        <label>com o assunto "Bolted Joint".</label>
+        <div class="btns">
+          <a class="btn1" onclick="setDisplayMensagens('dev-aux', false)"
+            >Fechar</a
+          >
+        </div>
+      </div>
+      <div class="popup_box pergunta" id="erro" style="display: none">
+        <span>Erro!</span>
+        <label id="erroMsg"></label>
+        <div class="btns">
+          <a class="btn1" onclick="setDisplayMensagens('erro', false)"
+            >Fechar</a
+          >
+        </div>
+      </div>
+    </main>
+    <script type="text/javascript">
+      eel.expose(populate_select);
+      function populate_select(id, list) {
+        let select = document.getElementById(`selecione${id}`);
+        let options = select.getElementsByTagName("option");
+
+        for (let i = options.length; i--; ) {
+          select.removeChild(options[i]);
+        }
+        for (let i = 0; i <= list.length; i++) {
+          let opt = document.createElement("option");
+          let value = list[i];
+          if (value == undefined) continue;
+          opt.value = value;
+          opt.innerHTML = value;
+          select.appendChild(opt);
+        }
+      }
+
+      eel.expose(fill_value);
+      function fill_value(id, value) {
+        let item = document.getElementById(id);
+        item.value = value;
+      }
+
+      eel.expose(table_cone_deformacao);
+      function table_cone_deformacao(tableRows) {
+        criarTabelaConeDeformacao(tableRows);
+      }
+
+      eel.expose(table_criterios_projeto);
+      function table_criterios_projeto(tableRows, type) {
+        criarTabelaCriteriosProjeto(tableRows, type);
+      }
+    </script>
+    <script type="text/javascript" src="./main.js"></script>
+  </body>
+</html>

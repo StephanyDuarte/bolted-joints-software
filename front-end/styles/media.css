@@ -1,0 +1,27 @@
+@media screen and (max-width: 760px){
+    header{
+        flex-direction: column;
+    }
+    main{
+        flex-direction: column;
+    }
+    form{
+        margin: 0 auto;
+        width: 100%;
+    }
+    input{
+        align-self: center;
+    }
+    img{
+        width: 300px;
+        margin: 0 auto;
+        margin-top: 100px;
+    }
+    ul{
+        text-align: center;
+    }
+    .first{
+        flex-direction: column;
+    }
+
+}

@@ -1,0 +1,218 @@
+<!-- Link: landing page https://www.youtube.com/watch?v=edDCEK5QWE8 -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="./styles/main.css" />
+    <link rel="stylesheet" type="text/css" href="./styles/fonts.css" />
+    <link rel="stylesheet" type="text/css" href="./styles/media.css" />
+    <script type="text/javascript" src="/eel.js"></script>
+    <script type="text/javascript" src="./main.js"></script>
+
+    <title>BJ Software</title>
+  </head>
+  <body onload="init()">
+    <header>
+      <div id="title">
+        <h1>Bolted Joint</h1>
+        <h1>Software</h1>
+      </div>
+      <ul>
+          <a class="item one active" href="#"><li>Início</li></a>
+          <a class="item two" href="#"><li>Rigidez do Parafuso</li></a>
+          <a class="item three" href="#"><li>Rigidez dos Materiais</li></a>
+          <a class="item four" href="#"><li>Cones de deformação</li></a>
+          <a class="item five" href="#"><li>Constante da junta</li></a>
+          <a class="item six" href="#"><li>Inputs</li></a>
+          <a class="item seven" href="#"><li>Validação</li></a>
+          
+        </ul>
+    </header>
+    <main>
+      <aside>
+        <h3>Rigidez do Parafuso</h3>
+        <section>
+          <div class="row">
+            <div class="col">
+              <p>Parafuso</p>
+              <select
+                id="selecioneParafuso"
+                onchange="onChangeSelect('selecioneParafuso')"
+              ></select>
+            </div>
+            <div class="col">
+              <p>Passo (mm)</p>
+              <select id="selecionePasso"></select>
+            </div>
+          </div>
+
+          <div class="row">
+            <!-- <div class="col">
+              <p>Material</p>
+              <select
+                id="selectMaterial"
+                onchange="onChangeSelect('selectMaterial')"
+              >
+                <option selected>-</option>
+              </select>
+            </div> -->
+            <div class="col">
+              <p>Rigidez (Aço-Carbono)</p>
+              <input type="text" id="elasticidadeEParafuso" value="" />
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <p>Altura da Porca (mm)</p>
+              <input type="text" id="alturaPorca" value="" />
+            </div>
+            <div class="col">
+              <p>Quantidade de Porcas</p>
+              <input type="number" min="0" id="quantidadePorca" value="1" />
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col">
+              <p>Arruela (mm)</p>
+              <input type="text" id="alturaArruela" placeholder="espessura" />
+            </div>
+            <div class="col">
+              <p>Quantidade de Arruelas</p>
+              <input type="number" min="0" id="quantidadeArruela" value="0" />
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <p>Espessura total das chapas (mm)</p>
+              <input type="text" id="alturaTotalChapas" placeholder="456.7 mm" />
+            </div>
+          </div>
+          <input
+            type="button"
+            value="Calcular"
+            onclick="calculeComprimentoParafuso()"
+          />
+        </section>
+      </aside>
+      <article>
+        <img
+          src="./components/images/77d0a7c454e658833800528e748edbe9.png"
+          alt="exemplo-preenchimento"
+        />
+      </article>
+    </main>
+    <section>
+      <h4>Comprimento do Parafuso</h4>
+      <div class="row">
+        <div class="col">
+          <p>Área de tensão de tração</p>
+          <input type="text" id="a_t" value="5.2 mm²" readonly />
+        </div>
+        <div class="col">
+          <p>Área de d</p>
+          <input type="text" id="a_d" value="5.2 mm²" readonly />
+        </div>
+        <div class="col">
+          <p><span>Comprimento do Parafuso</span></p>
+          <input type="text" id="comprimentoParafuso" value="" readonly />
+          <div class="row">
+            <input
+              type="checkbox"
+              name="alterL"
+              id="alterL"
+              onchange="changeReadOnly()"
+            />
+            <label for="alterL"> Alterar valor manualmente</label><br />
+          </div>
+        </div>
+      </div>
+      <input
+        type="button"
+        value="Calcular Rigidez"
+        onclick="calculeRigidezParafuso()"
+      />
+    </section>
+    <section>
+      <h4>Resultados</h4>
+      <div class="row">
+        <div class="col">
+          <p>L_T</p>
+          <input type="text" id="l_t_cap" value="5.2 mm²" />
+        </div>
+        <div class="col">
+          <p>Ld</p>
+          <input type="text" id="l_d" value="5.2 mm²" />
+        </div>
+        <div class="col">
+          <p>Lt</p>
+          <input type="text" id="l_t" value="5.2 mm²" />
+        </div>
+        <div class="col">
+          <p><span>Rigidez do parafuso</span></p>
+          <input type="text" id="kp" value="5.2 mm²" />
+        </div>
+      </div>
+      <input type="button" value="Next" onclick="add_row()" />
+    </section>
+    <section>
+      <aside>
+        <h3>Rigidez dos Materiais</h3>
+        <table>
+            <tbody>
+          <tr>
+            <th>N</th>
+            <th>Espessura</th>
+            <th>Material</th>
+            <th>Modulo E</th>
+            <th>Result</th>
+          </tr>
+        </tbody>
+        </table>
+        <input type="button" id="add" value="+" onclick="add_row()">
+        <input type="button" id="calc_rm" value="Calcular Rigidez Materiais" onclick="calculeRigidezMateriais()">
+      </aside>
+      <article></article>
+    </section>
+
+    <section>
+        <h4>Resultados</h4>
+        <div class="row">
+          <div class="col">
+            <p><span>Rigidez dos Materiais</span></p>
+            <input type="text" id="km" readonly/>
+          </div>
+        </div>
+        <input type="button" value="Next" onclick="rigidez_materials()" />
+      </section>
+
+    <script type="text/javascript">
+      eel.expose(populate_select);
+      function populate_select(id, list) {
+        let select = document.getElementById(`select${id}`);
+        let options = select.getElementsByTagName("option");
+
+        for (let i = options.length; i--; ) {
+          select.removeChild(options[i]);
+        }
+        for (let i = 0; i <= list.length; i++) {
+          let opt = document.createElement("option");
+          let value = list[i];
+          if (value == undefined) continue;
+          opt.value = value;
+          opt.innerHTML = value;
+          select.appendChild(opt);
+        }
+      }
+
+      eel.expose(fill_value);
+      function fill_value(id, value) {
+        let item = document.getElementById(id);
+        item.value = value;
+      }
+    </script>
+  </body>
+</html>
